@@ -111,4 +111,37 @@ $(document).ready(function (){
         }, 1000);
     }
 
+    function getFormattedSeconds() {
+        return (quizTime - secondsElapsed);
+    }
+
+    function createInitialPage() {
+        currState = appStates.Initial;
+        console.log("App State Transitioning To:", currState);
+
+        $(contElement).empty();
+        
+        var header = $("<header><h1>Liverpool FC Quiz</h1></header>");
+        var paragraph = $("<p>Good luck! Keep in mind that incorrect answers will penalize your score/time by ten seconds.</p>")
+        var button = $("<button id=\"start-quiz-btn\" type=\"button\" class=\"btn btn-red\">Start Quiz</button>")
+
+        $(contElement).append(header, paragraph, button);
+
+        $("#start-quiz-btn").on("click", function() {
+            createNewQuestion();
+        });
+    }
+
+    function createNewQuestion() {
+        if(currQuestion >= questions.length) {
+            createSubmitPage();
+            return;
+        }
+
+        prevState = currState;
+        currState = appStates.Questioning;
+        console.log("App State Transitioning To:", currStatezam);
+
+        $(contElement).empty();
+
     
