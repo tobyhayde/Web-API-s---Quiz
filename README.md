@@ -13,7 +13,8 @@ THEN the game is over
 WHEN the game is over
 THEN I can save my initials and score
 #
-[Screenshot (13)](https://user-images.githubusercontent.com/95835120/150717827-b7001532-59b9-442d-852d-5e9ef3a0a265.png)
+![Screenshot (13)](https://user-images.githubusercontent.com/95835120/150718431-0d7235de-6083-4231-89e8-ee846a7f47fb.png)
 #
 Link to GitHub: https://github.com/tobyhayde
+#
 Link to deployed application: https://tobyhayde.github.io/Web-API-s---Quiz/
