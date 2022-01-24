@@ -19,7 +19,7 @@ $(document).ready(function (){
     var currQuestion = 0;
     var lastSelectedAnswer = "";
 
-    const quizTime = 75;
+    const quizTime = 60;
     const questions = [
         question_1 = {
             textContent: "Who is NOT in the top 5 scorers for Liverpool? (all competitions)",
@@ -125,7 +125,7 @@ $(document).ready(function (){
         
         var header = $("<header><h1>Liverpool FC Quiz</h1></header>");
         var paragraph = $("<p>Good luck! Keep in mind that incorrect answers will penalize your score and time.</p>")
-        var button = $("<button id=\"start-quiz-btn\" type=\"button\" class=\"btn btn-red\">Start Quiz!</button>")
+        var button = $("<button id='start-quiz-btn' type='button' class='btn btn-red'>Start Quiz!</button>")
 
         $(contElement).append(header, paragraph, button);
 
@@ -142,7 +142,7 @@ $(document).ready(function (){
 
         prevState = currState;
         currState = appStates.Questioning;
-        console.log("App State Transitioning To:", currStatezam);
+        console.log("App State Transitioning To:", currState);
 
         $(contElement).empty();
 
@@ -166,9 +166,9 @@ $(document).ready(function (){
             var isCorrect = lastSelectedAnswer === questionObj.answer;
 
             if (isCorrect)
-                score += 30;
+                score += 50;
             else if (!isCorrect) {
-                secondsElapsed += 10;
+                secondsElapsed += 5;
             }
 
             currQuestion++;
@@ -194,7 +194,7 @@ $(document).ready(function (){
     
         var header = $("<h1>Finished!</h1>");
         var paragraph = $(`<p style="text-align: left">Your score is ${totalScore}.</p>`);
-        var submitField = $("<div class=\"submit-field\">Enter initials: <input id=\"initials\" type=\"text\"> <button id=\"initials-submit\" type=\"button\" class=\"btn btn-red\">Submit</button></div>");
+        var submitField = $("<div class='submit-field'>Enter initials: <input id='initials' type='text'> <button id='initials-submit' type='button' class='btn btn-red'>Submit</button></div>");
     
         $(contElement).append(header, paragraph, submitField);
     
@@ -225,5 +225,95 @@ $(document).ready(function (){
             reset();
         });
     }
-    
-    
+// highscores saved and colour-coded with sortfunction
+    function createLeaderboard() {
+        if(currState != appStates.Leaderboard)
+            prevState = currState;
+            currState = appStates.Leaderboard;
+        console.log("App State Transitioning To:", currState);
+
+        $(hgscElement).empty();
+        $(timrElement).empty();
+        $(contElement).empty();
+
+        var header = $("<h1 style='margin-top:0;'>Highscores!</h1>");
+
+        var highscores = localStorage.getItem("highscores");
+
+        $(contElement).append(header);
+
+        if(highscores)
+        {
+            var parsedHighscores = JSON.parse(highscores);
+
+            var sortedHighscores = sortHighscores();
+
+            var orderScores = $("<ol id='highscore-list'></ol>");
+
+            var counter = 1;
+            $.each(sortedHighscores, function(key, value)
+            {
+                var liElement = $(`<li class="highscore">${counter}. ${key} - ${value}</li>`);
+
+                if (counter % 2)
+                    liElement.addClass("yellow");
+                else
+                    liElement.addClass("blue");
+
+                $(orderScores).append(liElement);
+                counter++;
+            });
+
+            $(contElement).append(orderScores);
+
+            function sortHighscores() {
+                items = Object.keys(parsedHighscores).map(function(key) {
+                    return [key, parsedHighscores[key]];
+                });
+                items.sort(function(first, second) {
+                    return second[1] - first[1];
+                });
+                sorted_obj={}
+                $.each(items, function(k, v) {
+                    use_key = v[0]
+                    use_value = v[1]
+                    sorted_obj[use_key] = use_value
+                });
+                return(sorted_obj);
+            } 
+        }
+
+        var buttons = $("<div style='text-align:left'><button id='hs-back' type='button' class='btn btn-red'>Go Back</button> <button id='hs-clear' type='button' class='btn btn-red'>Clear Highscores</button></div>");
+
+        $(contElement).append(buttons);
+
+        $("#hs-clear").on("click", function(event) {
+            event.preventDefault();
+            localStorage.removeItem("highscores");
+            $("#highscore-list").empty();
+        });
+
+        $("#hs-back").on("click", function(event){
+            event.preventDefault();
+
+            switch(prevState)
+            {
+                case appStates.Initial:
+                    createInitialPage();
+                    break;
+                case appStates.Questioning:
+                    createNewQuestion();
+                    break; 
+                case appStates.SubmittingScore:
+                    createSubmitPage();
+                    break;
+                default:
+                    console.log(`state ${prevState} not supported`);
+                    break;
+            }
+
+            $(timrElement).html(`Timer: ${getFormattedSeconds()}`);
+            $(hgscElement).html("View Highscores");
+    });
+    }
+});

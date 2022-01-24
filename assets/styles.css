@@ -33,6 +33,15 @@ li {
     color: red;
 }
 
+#ques-content {
+    text-align: left;
+}
+
+#ques-content h1 {
+    text-align: left;
+    font-size: 30px;
+}
+
 #timer {
     float: right;
     position: absolute;
