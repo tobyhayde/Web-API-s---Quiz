@@ -4,12 +4,6 @@
     font-size: 20px;
   }
 
-hr {
-    border-top: 1.5px solid gray;
-    color : gray;
-    opacity: 0.8;
-}
-
 h1 {
     text-align: left;
     margin-top: 10%;
@@ -87,17 +81,6 @@ li {
 
 .submit-field {
     text-align: left;
-}
-
-.fader {
-    animation: cssAnimation 1s forwards;
-}
-
-.fader h3 {
-    font-weight: bold;
-    text-align: left;
-    color : gray;
-    opacity: 0.8;
 }
 
 @keyframes cssAnimation {

@@ -70,7 +70,7 @@ $(document).ready(function (){
                 "Van Dijk",
                 "Keita",
                 "Alisson",
-                "Saurez"
+                "Suarez"
             ],
             answer : "Van Dijk"
         }    
@@ -122,8 +122,8 @@ $(document).ready(function (){
         $(contElement).empty();
         
         var header = $("<header><h1>Liverpool FC Quiz</h1></header>");
-        var paragraph = $("<p>Good luck! Keep in mind that incorrect answers will penalize your score/time by ten seconds.</p>")
-        var button = $("<button id=\"start-quiz-btn\" type=\"button\" class=\"btn btn-red\">Start Quiz</button>")
+        var paragraph = $("<p>Good luck! Keep in mind that incorrect answers will penalize your score and time.</p>")
+        var button = $("<button id=\"start-quiz-btn\" type=\"button\" class=\"btn btn-red\">Start Quiz!</button>")
 
         $(contElement).append(header, paragraph, button);
 
@@ -143,5 +143,39 @@ $(document).ready(function (){
         console.log("App State Transitioning To:", currStatezam);
 
         $(contElement).empty();
+
+        var questionObj = questions[currQuestion];
+        var header = $(`<h1>${questionObj.textContent}</h1>`);
+        var unList = $("<ul>");
+
+        $(questionObj.options).each(function(index, value){
+            var btn = $(`<li><button type="button" class="ques-option btn btn-red" data-ques-option="${value}">${index + 1}. ${value}</button></li>`);
+            $(unList).append(btn);
+        });
+
+        $(contElement).append(header, unList);
+
+        if(prevState != appStates.Questioning)
+            startTimer();
+
+        $(".ques-option").on("click", function(event){
+            event.preventDefault();
+            lastSelectedAnswer = $(this).attr("data-ques-option");
+            var isCorrect = lastSelectedAnswer === questionObj.answer;
+
+            if (isCorrect)
+                score += 30;
+            else if (!isCorrect) {
+                secondsElapsed += 10;
+            }
+
+            currQuestion++;
+            createNewQuestion();
+
+            if (isCorrect)
+                displayMessage("Correct!");
+            else 
+                displayMessage("Wrong!");
+        });
 
     
