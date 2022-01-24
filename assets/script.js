@@ -43,13 +43,37 @@ $(document).ready(function (){
         },
 
         question_3 = {
+            textContent: "How many European cups have Liverpool won?",
+            options : [
+                "3",
+                "4",
+                "5",
+                "6"
+            ],
+            answer : "6"
+        },
             
-
         question_4 = {
-            
+            textContent: "Who holds the Liverpool record for the most goals in a single premier league season?",
+            options : [
+                "Suarez",
+                "Salah",
+                "Torres",
+                "Owen"
+            ],
+            answer : "Salah"
+        },
 
         question_5 = {
-          
+            textContent: "Who is Liverpool's record signing?",
+            options : [
+                "Van Dijk",
+                "Keita",
+                "Alisson",
+                "Saurez"
+            ],
+            answer : "Van Dijk"
+        }    
     ];
 
     init();
