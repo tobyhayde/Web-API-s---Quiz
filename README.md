@@ -13,7 +13,6 @@ THEN the game is over
 WHEN the game is over
 THEN I can save my initials and score
 #
-A screenshot of the application
 [Screenshot (13)](https://user-images.githubusercontent.com/95835120/150717827-b7001532-59b9-442d-852d-5e9ef3a0a265.png)
 #
 Link to GitHub: https://github.com/tobyhayde
