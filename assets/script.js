@@ -1,3 +1,4 @@
+// initial declarations and questions array
 $(document).ready(function (){
     var appStates = {
         Initial : "state.initial",
@@ -76,6 +77,7 @@ $(document).ready(function (){
         }    
     ];
 
+// initial home page along with timer function  
     init();
 
     function init(){
@@ -131,7 +133,7 @@ $(document).ready(function (){
             createNewQuestion();
         });
     }
-
+// cycle through each question with correct/wrong response
     function createNewQuestion() {
         if(currQuestion >= questions.length) {
             createSubmitPage();
@@ -177,5 +179,51 @@ $(document).ready(function (){
             else 
                 displayMessage("Wrong!");
         });
+    }
 
+// quiz end score submit page and save to local storage 
+    function createSubmitPage() {
+        clearInterval(interval);
+        $(timrElement).html(`Timer: ${getFormattedSeconds()}`);
+        currState = appStates.SubmittingScore;
+        console.log("App State Transitioning To:", currState);
+    
+        var totalScore = score + (Math.floor(getFormattedSeconds() * .15));
+    
+        $(contElement).empty();
+    
+        var header = $("<h1>Finished!</h1>");
+        var paragraph = $(`<p style="text-align: left">Your score is ${totalScore}.</p>`);
+        var submitField = $("<div class=\"submit-field\">Enter initials: <input id=\"initials\" type=\"text\"> <button id=\"initials-submit\" type=\"button\" class=\"btn btn-red\">Submit</button></div>");
+    
+        $(contElement).append(header, paragraph, submitField);
+    
+        $("#initials-submit").on("click", function(event){
+            event.preventDefault();
+ 
+            currState = appStates.Initial;
+    
+            var inputInitials = $("#initials").val();
+    
+            if(!inputInitials){
+                alert("You must provide initials to save your score!");
+                return;
+            }
+    
+            var highscores = localStorage.getItem("highscores");
+    
+            if(!highscores)
+                highscores = {};
+            else
+                highscores = JSON.parse(highscores);
+    
+            highscores[inputInitials] = totalScore;
+    
+            localStorage.setItem("highscores", JSON.stringify(highscores));
+    
+            createLeaderboard();
+            reset();
+        });
+    }
+    
     

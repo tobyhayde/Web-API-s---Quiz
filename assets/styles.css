@@ -83,8 +83,3 @@ li {
     text-align: left;
 }
 
-@keyframes cssAnimation {
-    0%   {opacity: 1;}
-    99% {opacity: 1;}
-    100% {opacity: 0;}
-}
