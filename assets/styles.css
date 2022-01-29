@@ -24,6 +24,11 @@ li {
     margin-bottom: 0.2em;
 }
 
+hr {
+    border-top: 1.5px solid gray;
+    color : red;
+    opacity: 0.8;
+}
 #highscores {
     float: left;
     position: absolute;
@@ -91,4 +96,19 @@ li {
 .submit-field {
     text-align: left;
 }
+.fader {
+    animation: cssAnimation 1s forwards;
+}
 
+.fader h3 {
+    font-weight: bold;
+    text-align: left;
+    color : red;
+    opacity: 0.8;
+}
+
+@keyframes cssAnimation {
+    0%   {opacity: 1;}
+    99% {opacity: 1;}
+    100% {opacity: 0;}
+}

@@ -178,7 +178,13 @@ $(document).ready(function (){
                 displayMessage("Correct!");
             else 
                 displayMessage("Wrong!");
-        });
+        }); 
+        
+        function displayMessage(message) {
+            var newMessage = $(`<div class="fader"><hr><h3>${message}</h3></div>`);
+            $("#content").append(newMessage);
+        }
+
     }
 
 // quiz end score submit page and save to local storage 
